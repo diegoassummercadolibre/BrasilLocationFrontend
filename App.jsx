@@ -13,8 +13,10 @@ class App extends React.Component {
       }
       
       loadStates() {
-            axios.get('http://localhost:8081/countries/BR')
-            .then(response => this.setState({states: response.data.states}))
+            if(this.state.states.length === 0)
+                  axios.get('http://localhost:8081/countries/BR').then(response => this.setState({states: response.data.states}));
+            else
+                  this.setState({states:[]});
       }
 
       render() {
@@ -55,8 +57,10 @@ class TableRowStates extends React.Component {
       }
 
       loadCities(id) {
-            axios.get('http://localhost:8081/states/' + id)
-                .then(response => this.setState({cities: response.data.cities}))
+            if(this.state.cities.length === 0)
+                  axios.get('http://localhost:8081/states/' + id).then(response => this.setState({cities: response.data.cities}))
+            else
+                  this.setState({cities:[]});
       }
 
       render() {
@@ -84,8 +88,10 @@ class TableRowCities extends React.Component {
       }
 
       loadNeighborhoods(id) {
-            axios.get('http://localhost:8081/cities/' + id)
-                .then(response => this.setState({neighborhoods: response.data.neighborhoods}))
+            if(this.state.neighborhoods.length === 0)
+                  axios.get('http://localhost:8081/cities/' + id).then(response => this.setState({neighborhoods: response.data.neighborhoods}));
+            else
+                  this.setState({neighborhoods:[]});
       }
 
       render() {
