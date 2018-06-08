@@ -28,10 +28,9 @@ class App extends React.Component {
                   <Header/>
                   <ul>
                         <li onClick={this.getCountry}>Brasil</li>
-                        <ul>
+
                         {this.state.states.map((state, i) => <ListStates key = {i} 
                               data = {state} />)}
-                        </ul>
                   </ul>
             </div>
             );
