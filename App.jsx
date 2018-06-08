@@ -9,14 +9,17 @@ class App extends React.Component {
                   states: []
             };
 
-            this.loadStates = this.loadStates.bind(this);
+            this.getCountry = this.getCountry.bind(this);
       }
       
-      loadStates() {
-            if(this.state.states.length === 0)
-                  axios.get('http://localhost:8081/countries/BR').then(response => this.setState({states: response.data.states}));
-            else
+      getCountry() {
+            if(this.state.states.length === 0){
+                  axios.get('http://localhost:8081/countries/BR')
+                        .then(response => this.setState({states: response.data.states}));
+            }
+            else{
                   this.setState({states:[]});
+            }  
       }
 
       render() {
@@ -24,9 +27,9 @@ class App extends React.Component {
             <div>
                   <Header/>
                   <ul>
-                        <li onClick={this.loadStates.bind()}>Brasil</li>
+                        <li onClick={this.getCountry.bind()}>Brasil</li>
                         <ul>
-                        {this.state.states.map((state, i) => <TableRowStates key = {i} 
+                        {this.state.states.map((state, i) => <ListStates key = {i} 
                               data = {state} />)}
                         </ul>
                   </ul>
@@ -45,7 +48,7 @@ class Header extends React.Component {
       }
 }
 
-class TableRowStates extends React.Component {
+class ListStates extends React.Component {
       constructor() {
             super();
                   
@@ -53,30 +56,38 @@ class TableRowStates extends React.Component {
                   cities: []
             };
 
-            this.loadCities = this.loadCities.bind(this);
+            this.getState = this.getState.bind(this);
       }
 
-      loadCities(id) {
-            if(this.state.cities.length === 0)
-                  axios.get('http://localhost:8081/states/' + id).then(response => this.setState({cities: response.data.cities}))
-            else
+      getState(id) {
+            /* if(this.state.cities.length === 0){
+                  axios.get('http://localhost:8081/states/' + id)
+                        .then(response => this.setState({cities: response.data.cities}))
+            }
+            else{
                   this.setState({cities:[]});
+            }*/
+
+            axios.get('http://localhost:8081/states/' + id)
+                        .then(response => this.setState({cities: response.data.cities}))
       }
 
       render() {
             return (
-            <li onClick={() => this.loadCities(this.props.data.id)}>
-                  {this.props.data.name}
-                  <ul>
-                  {this.state.cities.map((city, i) => <TableRowCities key = {i} 
-                        data = {city} />)}
-                  </ul>
-            </li>
+            <div>
+                  <li onClick={() => this.getState(this.props.data.id)}>
+                        {this.props.data.name}
+                        <ul>
+                        {this.state.cities.map((city, i) => <ListCities key = {i} 
+                              data = {city} />)}
+                        </ul>
+                  </li>
+            </div>
       );
    }
 }
 
-class TableRowCities extends React.Component {
+class ListCities extends React.Component {
       constructor() {
             super();
                   
@@ -84,31 +95,39 @@ class TableRowCities extends React.Component {
                   neighborhoods: []
             };
 
-            this.loadNeighborhoods = this.loadNeighborhoods.bind(this);
+            this.getCity = this.getCity.bind(this);
       }
 
-      loadNeighborhoods(id) {
-            if(this.state.neighborhoods.length === 0)
-                  axios.get('http://localhost:8081/cities/' + id).then(response => this.setState({neighborhoods: response.data.neighborhoods}));
-            else
+      getCity(id) {
+            /* if(this.state.neighborhoods.length === 0){
+                  axios.get('http://localhost:8081/cities/' + id)
+                        .then(response => this.setState({neighborhoods: response.data.neighborhoods}));
+            }
+            else{
                   this.setState({neighborhoods:[]});
+            }*/
+            
+            axios.get('http://localhost:8081/cities/' + id)
+            .then(response => this.setState({neighborhoods: response.data.neighborhoods}));
       }
 
       render() {
             return (
-            <li onClick={() => this.loadNeighborhoods(this.props.data.id)}>
-                  {this.props.data.name}
-                  <ul>
-                  {this.state.neighborhoods.map((neighborhood, i) => <TableRowNeighborhoods key = {i} 
-                        data = {neighborhood} />)}
-                  </ul>
-            </li>
+            <div>
+                  <li onClick={() => this.getCity(this.props.data.id)}>
+                        {this.props.data.name}
+                        <ul>
+                        {this.state.neighborhoods.map((neighborhood, i) => <ListNeighborhoods key = {i} 
+                              data = {neighborhood} />)}
+                        </ul>
+                  </li>
+            </div>
       );
    }
 }
 
 
-class TableRowNeighborhoods extends React.Component {
+class ListNeighborhoods extends React.Component {
       render() {
       return (
          <li>
