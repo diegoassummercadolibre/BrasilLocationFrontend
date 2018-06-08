@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 
 class App extends React.Component {
-      constructor() {
-            super();
+      constructor(props) {
+            super(props);
                   
             this.state = {
                   states: []
@@ -27,7 +27,7 @@ class App extends React.Component {
             <div>
                   <Header/>
                   <ul>
-                        <li onClick={this.getCountry.bind()}>Brasil</li>
+                        <li onClick={this.getCountry}>Brasil</li>
                         <ul>
                         {this.state.states.map((state, i) => <ListStates key = {i} 
                               data = {state} />)}
@@ -49,8 +49,8 @@ class Header extends React.Component {
 }
 
 class ListStates extends React.Component {
-      constructor() {
-            super();
+      constructor(props) {
+            super(props);
                   
             this.state = {
                   cities: []
@@ -60,36 +60,33 @@ class ListStates extends React.Component {
       }
 
       getState(id) {
-            /* if(this.state.cities.length === 0){
+            if(this.state.cities.length === 0){
                   axios.get('http://localhost:8081/states/' + id)
                         .then(response => this.setState({cities: response.data.cities}))
             }
             else{
                   this.setState({cities:[]});
-            }*/
-
-            axios.get('http://localhost:8081/states/' + id)
-                        .then(response => this.setState({cities: response.data.cities}))
+            }
       }
 
       render() {
             return (
             <div>
-                  <li onClick={() => this.getState(this.props.data.id)}>
-                        {this.props.data.name}
+                  <ul>
+                        <li onClick={() => this.getState(this.props.data.id)}>{this.props.data.name}</li>
                         <ul>
                         {this.state.cities.map((city, i) => <ListCities key = {i} 
                               data = {city} />)}
                         </ul>
-                  </li>
+                  </ul>
             </div>
       );
    }
 }
 
 class ListCities extends React.Component {
-      constructor() {
-            super();
+      constructor(props) {
+            super(props);
                   
             this.state = {
                   neighborhoods: []
@@ -99,28 +96,23 @@ class ListCities extends React.Component {
       }
 
       getCity(id) {
-            /* if(this.state.neighborhoods.length === 0){
+            if(this.state.neighborhoods.length === 0){
                   axios.get('http://localhost:8081/cities/' + id)
                         .then(response => this.setState({neighborhoods: response.data.neighborhoods}));
             }
             else{
                   this.setState({neighborhoods:[]});
-            }*/
-            
-            axios.get('http://localhost:8081/cities/' + id)
-            .then(response => this.setState({neighborhoods: response.data.neighborhoods}));
+            }
       }
 
       render() {
             return (
             <div>
-                  <li onClick={() => this.getCity(this.props.data.id)}>
-                        {this.props.data.name}
-                        <ul>
-                        {this.state.neighborhoods.map((neighborhood, i) => <ListNeighborhoods key = {i} 
-                              data = {neighborhood} />)}
-                        </ul>
-                  </li>
+                  <li onClick={() => this.getCity(this.props.data.id)}>{this.props.data.name}</li>
+                  <ul>
+                  {this.state.neighborhoods.map((neighborhood, i) => <ListNeighborhoods key = {i} 
+                        data = {neighborhood} />)}
+                  </ul>
             </div>
       );
    }
