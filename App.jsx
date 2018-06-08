@@ -28,9 +28,10 @@ class App extends React.Component {
                   <Header/>
                   <ul>
                         <li onClick={this.getCountry}>Brasil</li>
-
+                        <ul>
                         {this.state.states.map((state, i) => <ListStates key = {i} 
                               data = {state} />)}
+                        </ul>
                   </ul>
             </div>
             );
@@ -71,13 +72,11 @@ class ListStates extends React.Component {
       render() {
             return (
             <div>
+                  <li onClick={() => this.getState(this.props.data.id)}>{this.props.data.name}</li>
                   <ul>
-                        <li onClick={() => this.getState(this.props.data.id)}>{this.props.data.name}</li>
-                        <ul>
-                        {this.state.cities.map((city, i) => <ListCities key = {i} 
-                              data = {city} />)}
-                        </ul>
-                  </ul>
+                  {this.state.cities.map((city, i) => <ListCities key = {i} 
+                        data = {city} />)}
+                  </ul>  
             </div>
       );
    }
